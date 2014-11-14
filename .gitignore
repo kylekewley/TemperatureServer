@@ -1,0 +1,39 @@
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+GarageServer
+
+# Python (Used for You Complete Me)
+*.pyc
+
+bin/
+build/
+
+#Vim swap files
+*.swp
+
+#sqlite databases
+*.sqlite
+
+#protobuffer intermediates
+ProtocolBuffers/*.pb.cc
+ProtocolBuffers/*.pb.h
+ProtocolBuffers/*.java

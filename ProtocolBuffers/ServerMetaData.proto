@@ -1,0 +1,9 @@
+message ServerMetaData {
+    message Sensor {
+        required uint32 sensorId = 1;
+        optional string sensorName = 2;
+    }
+
+    repeated Sensor sensors = 1;
+}
+

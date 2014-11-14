@@ -1,0 +1,7 @@
+message TemperatureRequest {
+    required uint32 sensorId = 1;
+    required uint32 startTime = 2; // Seconds since Jan 1 1970 UTC
+    optional uint32 endTime = 3;
+    optional uint32 timeLength = 4; // Number of seconds to return data for
+    optional uint32 interval = 5;
+}
