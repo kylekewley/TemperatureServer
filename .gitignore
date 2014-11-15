@@ -37,3 +37,6 @@ build/
 ProtocolBuffers/*.pb.cc
 ProtocolBuffers/*.pb.h
 ProtocolBuffers/*.java
+
+./.release_time
+./session.vim
