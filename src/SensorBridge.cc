@@ -12,6 +12,9 @@ void fallingEdgeInturrupt();
 
 bool SensorBridge::bridgeBusy = false;
 
+SensorBridge::SensorBridge(Sensor s): sensor(s), initialized(false) {
+}
+
 int SensorBridge::initializeBridge() {
     if (wiringPiSetup() < 0) {
         fprintf(stderr, "Unable to setup wiringpi: %s", strerror(errno));

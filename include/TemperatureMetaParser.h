@@ -1,8 +1,6 @@
 #ifndef Temperature_Meta_Parser_h
 #define Temperature_Meta_Parser_h
 
-#include <CustomBufferParser.h>
-
 #include "TemperatureServer.h"
 #include "ServerMetaData.pb.h"
 

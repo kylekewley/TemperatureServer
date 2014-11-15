@@ -82,6 +82,10 @@ int main(int argc, char **argv) {
     return 0;
 }
 
+const std::vector<Sensor>& TemperatureServer::getSensors() {
+    return sensors;
+}
+
 TemperatureServer::TemperatureServer(std::vector<Sensor>& sensors, ClientManager& manager): sensors(sensors), clientManager(manager) {
     // Load instance variables
     for (Sensor s : sensors) {

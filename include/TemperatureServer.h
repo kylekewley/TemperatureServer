@@ -5,6 +5,7 @@
 #include <sqlite3.h>
 
 #include <ClientManager.h>
+#include <CustomBufferParser.imp.h>
 
 #include "SensorBridge.h"
 #include "TemperatureData.pb.h"

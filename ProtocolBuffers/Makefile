@@ -3,6 +3,8 @@ GEN_H := $(PROTO_SRC:.proto=.pb.h)
 GEN_CC := $(PROTO_SRC:.proto=.pb.cc)
 GEN_JAVA := $(PROTO_SRC:.proto=.java)
 
+CPP_GEN := $(GEN_CC) $(GEN_H)
+
 PROTO_GEN := $(GEN_CC) $(GEN_H) $(GEN_JAVA)
 
 JAVA_INSTALL= ./		#~/AndroidStudioProjects/TemperatureClient/app/src/main/java/kylekewley/garagedooropener/protocolbuffers
@@ -13,6 +15,10 @@ WIRE_COMPILER_JAR=/opt/java/lib/wire-compiler.jar
 PROTOC_CPP_COMPILER=protoc
 
 all: $(PROTO_GEN)
+
+cpp: $(CPP_GEN)
+
+java: $(GEN_JAVA)
 
 %.pb.cc: %.proto
 	$(PROTOC_CPP_COMPILER) --cpp_out=./ $<
