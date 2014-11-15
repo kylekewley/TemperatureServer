@@ -3,6 +3,7 @@ message TemperatureData {
         required uint32 timestamp = 1; //Seconds since Jan 1, 1970 UTC
         required uint32 temperature = 2; // The temperature * 100
         required uint32 humidity = 3;
+        required uint32 uniqueId = 4;
     }
 
     required uint32 sensorId = 1;

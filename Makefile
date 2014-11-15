@@ -14,7 +14,7 @@ RCOMPILE_FLAGS = -D NDEBUG
 # Additional debug-specific flags
 DCOMPILE_FLAGS = -D DEBUG
 # Add additional include paths
-INCLUDES = -I $(SRC_PATH)/ -I ./include
+INCLUDES = -I $(SRC_PATH)/ -I ./include -I /usr/local/include/WiringPi/ -I /usr/local/include/PiServer/
 # General linker settings
 LINK_FLAGS = -Wl,-rpath=/usr/local/lib -lPiServer -lprotobuf -lsqlite3 -lwiringPi -pthread -lbcm2835
 # Additional release-specific linker settings

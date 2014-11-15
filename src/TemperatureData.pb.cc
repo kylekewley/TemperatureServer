@@ -51,10 +51,11 @@ void protobuf_AssignDesc_TemperatureData_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(TemperatureData));
   TemperatureData_Temperature_descriptor_ = TemperatureData_descriptor_->nested_type(0);
-  static const int TemperatureData_Temperature_offsets_[3] = {
+  static const int TemperatureData_Temperature_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TemperatureData_Temperature, timestamp_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TemperatureData_Temperature, temperature_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TemperatureData_Temperature, humidity_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TemperatureData_Temperature, uniqueid_),
   };
   TemperatureData_Temperature_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -101,11 +102,12 @@ void protobuf_AddDesc_TemperatureData_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\025TemperatureData.proto\"\240\001\n\017TemperatureD"
+    "\n\025TemperatureData.proto\"\262\001\n\017TemperatureD"
     "ata\022\020\n\010sensorId\030\001 \002(\r\0222\n\014temperatures\030\002 "
-    "\003(\0132\034.TemperatureData.Temperature\032G\n\013Tem"
+    "\003(\0132\034.TemperatureData.Temperature\032Y\n\013Tem"
     "perature\022\021\n\ttimestamp\030\001 \002(\r\022\023\n\013temperatu"
-    "re\030\002 \002(\r\022\020\n\010humidity\030\003 \002(\r", 186);
+    "re\030\002 \002(\r\022\020\n\010humidity\030\003 \002(\r\022\020\n\010uniqueId\030\004"
+    " \002(\r", 204);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "TemperatureData.proto", &protobuf_RegisterTypes);
   TemperatureData::default_instance_ = new TemperatureData();
@@ -128,12 +130,12 @@ struct StaticDescriptorInitializer_TemperatureData_2eproto {
 const int TemperatureData_Temperature::kTimestampFieldNumber;
 const int TemperatureData_Temperature::kTemperatureFieldNumber;
 const int TemperatureData_Temperature::kHumidityFieldNumber;
+const int TemperatureData_Temperature::kUniqueIdFieldNumber;
 #endif  // !_MSC_VER
 
 TemperatureData_Temperature::TemperatureData_Temperature()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:TemperatureData.Temperature)
 }
 
 void TemperatureData_Temperature::InitAsDefaultInstance() {
@@ -143,7 +145,6 @@ TemperatureData_Temperature::TemperatureData_Temperature(const TemperatureData_T
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:TemperatureData.Temperature)
 }
 
 void TemperatureData_Temperature::SharedCtor() {
@@ -151,11 +152,11 @@ void TemperatureData_Temperature::SharedCtor() {
   timestamp_ = 0u;
   temperature_ = 0u;
   humidity_ = 0u;
+  uniqueid_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
 TemperatureData_Temperature::~TemperatureData_Temperature() {
-  // @@protoc_insertion_point(destructor:TemperatureData.Temperature)
   SharedDtor();
 }
 
@@ -186,44 +187,32 @@ TemperatureData_Temperature* TemperatureData_Temperature::New() const {
 }
 
 void TemperatureData_Temperature::Clear() {
-#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
-  &reinterpret_cast<TemperatureData_Temperature*>(16)->f) - \
-   reinterpret_cast<char*>(16))
-
-#define ZR_(first, last) do {                              \
-    size_t f = OFFSET_OF_FIELD_(first);                    \
-    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
-    ::memset(&first, 0, n);                                \
-  } while (0)
-
-  ZR_(timestamp_, humidity_);
-
-#undef OFFSET_OF_FIELD_
-#undef ZR_
-
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    timestamp_ = 0u;
+    temperature_ = 0u;
+    humidity_ = 0u;
+    uniqueid_ = 0u;
+  }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
 
 bool TemperatureData_Temperature::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:TemperatureData.Temperature)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
+  while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required uint32 timestamp = 1;
       case 1: {
-        if (tag == 8) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &timestamp_)));
           set_has_timestamp();
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(16)) goto parse_temperature;
         break;
@@ -231,14 +220,15 @@ bool TemperatureData_Temperature::MergePartialFromCodedStream(
 
       // required uint32 temperature = 2;
       case 2: {
-        if (tag == 16) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_temperature:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &temperature_)));
           set_has_temperature();
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(24)) goto parse_humidity;
         break;
@@ -246,25 +236,41 @@ bool TemperatureData_Temperature::MergePartialFromCodedStream(
 
       // required uint32 humidity = 3;
       case 3: {
-        if (tag == 24) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_humidity:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &humidity_)));
           set_has_humidity();
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
-        if (input->ExpectAtEnd()) goto success;
+        if (input->ExpectTag(32)) goto parse_uniqueId;
+        break;
+      }
+
+      // required uint32 uniqueId = 4;
+      case 4: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_uniqueId:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &uniqueid_)));
+          set_has_uniqueid();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
         break;
       }
 
       default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
+          return true;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -272,18 +278,12 @@ bool TemperatureData_Temperature::MergePartialFromCodedStream(
       }
     }
   }
-success:
-  // @@protoc_insertion_point(parse_success:TemperatureData.Temperature)
   return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:TemperatureData.Temperature)
-  return false;
 #undef DO_
 }
 
 void TemperatureData_Temperature::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:TemperatureData.Temperature)
   // required uint32 timestamp = 1;
   if (has_timestamp()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->timestamp(), output);
@@ -299,16 +299,19 @@ void TemperatureData_Temperature::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->humidity(), output);
   }
 
+  // required uint32 uniqueId = 4;
+  if (has_uniqueid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->uniqueid(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:TemperatureData.Temperature)
 }
 
 ::google::protobuf::uint8* TemperatureData_Temperature::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:TemperatureData.Temperature)
   // required uint32 timestamp = 1;
   if (has_timestamp()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->timestamp(), target);
@@ -324,11 +327,15 @@ void TemperatureData_Temperature::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->humidity(), target);
   }
 
+  // required uint32 uniqueId = 4;
+  if (has_uniqueid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->uniqueid(), target);
+  }
+
   if (!unknown_fields().empty()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:TemperatureData.Temperature)
   return target;
 }
 
@@ -355,6 +362,13 @@ int TemperatureData_Temperature::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->humidity());
+    }
+
+    // required uint32 uniqueId = 4;
+    if (has_uniqueid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->uniqueid());
     }
 
   }
@@ -393,6 +407,9 @@ void TemperatureData_Temperature::MergeFrom(const TemperatureData_Temperature& f
     if (from.has_humidity()) {
       set_humidity(from.humidity());
     }
+    if (from.has_uniqueid()) {
+      set_uniqueid(from.uniqueid());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -410,7 +427,7 @@ void TemperatureData_Temperature::CopyFrom(const TemperatureData_Temperature& fr
 }
 
 bool TemperatureData_Temperature::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
+  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
 
   return true;
 }
@@ -420,6 +437,7 @@ void TemperatureData_Temperature::Swap(TemperatureData_Temperature* other) {
     std::swap(timestamp_, other->timestamp_);
     std::swap(temperature_, other->temperature_);
     std::swap(humidity_, other->humidity_);
+    std::swap(uniqueid_, other->uniqueid_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -445,7 +463,6 @@ const int TemperatureData::kTemperaturesFieldNumber;
 TemperatureData::TemperatureData()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:TemperatureData)
 }
 
 void TemperatureData::InitAsDefaultInstance() {
@@ -455,7 +472,6 @@ TemperatureData::TemperatureData(const TemperatureData& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:TemperatureData)
 }
 
 void TemperatureData::SharedCtor() {
@@ -465,7 +481,6 @@ void TemperatureData::SharedCtor() {
 }
 
 TemperatureData::~TemperatureData() {
-  // @@protoc_insertion_point(destructor:TemperatureData)
   SharedDtor();
 }
 
@@ -496,7 +511,9 @@ TemperatureData* TemperatureData::New() const {
 }
 
 void TemperatureData::Clear() {
-  sensorid_ = 0u;
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    sensorid_ = 0u;
+  }
   temperatures_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -504,23 +521,20 @@ void TemperatureData::Clear() {
 
 bool TemperatureData::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:TemperatureData)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
+  while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required uint32 sensorId = 1;
       case 1: {
-        if (tag == 8) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &sensorid_)));
           set_has_sensorid();
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(18)) goto parse_temperatures;
         break;
@@ -528,24 +542,24 @@ bool TemperatureData::MergePartialFromCodedStream(
 
       // repeated .TemperatureData.Temperature temperatures = 2;
       case 2: {
-        if (tag == 18) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_temperatures:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                 input, add_temperatures()));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(18)) goto parse_temperatures;
-        if (input->ExpectAtEnd()) goto success;
+        if (input->ExpectAtEnd()) return true;
         break;
       }
 
       default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
+          return true;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -553,18 +567,12 @@ bool TemperatureData::MergePartialFromCodedStream(
       }
     }
   }
-success:
-  // @@protoc_insertion_point(parse_success:TemperatureData)
   return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:TemperatureData)
-  return false;
 #undef DO_
 }
 
 void TemperatureData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:TemperatureData)
   // required uint32 sensorId = 1;
   if (has_sensorid()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->sensorid(), output);
@@ -580,12 +588,10 @@ void TemperatureData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:TemperatureData)
 }
 
 ::google::protobuf::uint8* TemperatureData::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:TemperatureData)
   // required uint32 sensorId = 1;
   if (has_sensorid()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->sensorid(), target);
@@ -602,7 +608,6 @@ void TemperatureData::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:TemperatureData)
   return target;
 }
 
@@ -675,7 +680,9 @@ void TemperatureData::CopyFrom(const TemperatureData& from) {
 bool TemperatureData::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
-  if (!::google::protobuf::internal::AllAreInitialized(this->temperatures())) return false;
+  for (int i = 0; i < temperatures_size(); i++) {
+    if (!this->temperatures(i).IsInitialized()) return false;
+  }
   return true;
 }
 
