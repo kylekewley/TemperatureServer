@@ -33,6 +33,7 @@ void protobuf_ShutdownFile_TemperatureData_2eproto();
 
 class TemperatureData;
 class TemperatureData_Temperature;
+class TemperatureData_SingleDay;
 
 // ===================================================================
 
@@ -103,14 +104,14 @@ class TemperatureData_Temperature : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 temperature() const;
   inline void set_temperature(::google::protobuf::uint32 value);
 
-  // required uint32 humidity = 3;
+  // optional uint32 humidity = 3;
   inline bool has_humidity() const;
   inline void clear_humidity();
   static const int kHumidityFieldNumber = 3;
   inline ::google::protobuf::uint32 humidity() const;
   inline void set_humidity(::google::protobuf::uint32 value);
 
-  // required uint32 uniqueId = 4;
+  // optional uint32 uniqueId = 4;
   inline bool has_uniqueid() const;
   inline void clear_uniqueid();
   static const int kUniqueIdFieldNumber = 4;
@@ -142,6 +143,134 @@ class TemperatureData_Temperature : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static TemperatureData_Temperature* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class TemperatureData_SingleDay : public ::google::protobuf::Message {
+ public:
+  TemperatureData_SingleDay();
+  virtual ~TemperatureData_SingleDay();
+
+  TemperatureData_SingleDay(const TemperatureData_SingleDay& from);
+
+  inline TemperatureData_SingleDay& operator=(const TemperatureData_SingleDay& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const TemperatureData_SingleDay& default_instance();
+
+  void Swap(TemperatureData_SingleDay* other);
+
+  // implements Message ----------------------------------------------
+
+  TemperatureData_SingleDay* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const TemperatureData_SingleDay& from);
+  void MergeFrom(const TemperatureData_SingleDay& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 timestamp = 1;
+  inline bool has_timestamp() const;
+  inline void clear_timestamp();
+  static const int kTimestampFieldNumber = 1;
+  inline ::google::protobuf::uint32 timestamp() const;
+  inline void set_timestamp(::google::protobuf::uint32 value);
+
+  // optional .TemperatureData.Temperature currentTemperature = 2;
+  inline bool has_currenttemperature() const;
+  inline void clear_currenttemperature();
+  static const int kCurrentTemperatureFieldNumber = 2;
+  inline const ::TemperatureData_Temperature& currenttemperature() const;
+  inline ::TemperatureData_Temperature* mutable_currenttemperature();
+  inline ::TemperatureData_Temperature* release_currenttemperature();
+  inline void set_allocated_currenttemperature(::TemperatureData_Temperature* currenttemperature);
+
+  // optional .TemperatureData.Temperature dayHigh = 3;
+  inline bool has_dayhigh() const;
+  inline void clear_dayhigh();
+  static const int kDayHighFieldNumber = 3;
+  inline const ::TemperatureData_Temperature& dayhigh() const;
+  inline ::TemperatureData_Temperature* mutable_dayhigh();
+  inline ::TemperatureData_Temperature* release_dayhigh();
+  inline void set_allocated_dayhigh(::TemperatureData_Temperature* dayhigh);
+
+  // optional .TemperatureData.Temperature dayLow = 4;
+  inline bool has_daylow() const;
+  inline void clear_daylow();
+  static const int kDayLowFieldNumber = 4;
+  inline const ::TemperatureData_Temperature& daylow() const;
+  inline ::TemperatureData_Temperature* mutable_daylow();
+  inline ::TemperatureData_Temperature* release_daylow();
+  inline void set_allocated_daylow(::TemperatureData_Temperature* daylow);
+
+  // repeated .TemperatureData.Temperature temperatures = 5;
+  inline int temperatures_size() const;
+  inline void clear_temperatures();
+  static const int kTemperaturesFieldNumber = 5;
+  inline const ::TemperatureData_Temperature& temperatures(int index) const;
+  inline ::TemperatureData_Temperature* mutable_temperatures(int index);
+  inline ::TemperatureData_Temperature* add_temperatures();
+  inline const ::google::protobuf::RepeatedPtrField< ::TemperatureData_Temperature >&
+      temperatures() const;
+  inline ::google::protobuf::RepeatedPtrField< ::TemperatureData_Temperature >*
+      mutable_temperatures();
+
+  // @@protoc_insertion_point(class_scope:TemperatureData.SingleDay)
+ private:
+  inline void set_has_timestamp();
+  inline void clear_has_timestamp();
+  inline void set_has_currenttemperature();
+  inline void clear_has_currenttemperature();
+  inline void set_has_dayhigh();
+  inline void clear_has_dayhigh();
+  inline void set_has_daylow();
+  inline void clear_has_daylow();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::TemperatureData_Temperature* currenttemperature_;
+  ::TemperatureData_Temperature* dayhigh_;
+  ::TemperatureData_Temperature* daylow_;
+  ::google::protobuf::RepeatedPtrField< ::TemperatureData_Temperature > temperatures_;
+  ::google::protobuf::uint32 timestamp_;
+  friend void  protobuf_AddDesc_TemperatureData_2eproto();
+  friend void protobuf_AssignDesc_TemperatureData_2eproto();
+  friend void protobuf_ShutdownFile_TemperatureData_2eproto();
+
+  void InitAsDefaultInstance();
+  static TemperatureData_SingleDay* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -197,6 +326,7 @@ class TemperatureData : public ::google::protobuf::Message {
   // nested types ----------------------------------------------------
 
   typedef TemperatureData_Temperature Temperature;
+  typedef TemperatureData_SingleDay SingleDay;
 
   // accessors -------------------------------------------------------
 
@@ -207,17 +337,17 @@ class TemperatureData : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 sensorid() const;
   inline void set_sensorid(::google::protobuf::uint32 value);
 
-  // repeated .TemperatureData.Temperature temperatures = 2;
-  inline int temperatures_size() const;
-  inline void clear_temperatures();
-  static const int kTemperaturesFieldNumber = 2;
-  inline const ::TemperatureData_Temperature& temperatures(int index) const;
-  inline ::TemperatureData_Temperature* mutable_temperatures(int index);
-  inline ::TemperatureData_Temperature* add_temperatures();
-  inline const ::google::protobuf::RepeatedPtrField< ::TemperatureData_Temperature >&
-      temperatures() const;
-  inline ::google::protobuf::RepeatedPtrField< ::TemperatureData_Temperature >*
-      mutable_temperatures();
+  // repeated .TemperatureData.SingleDay dayData = 2;
+  inline int daydata_size() const;
+  inline void clear_daydata();
+  static const int kDayDataFieldNumber = 2;
+  inline const ::TemperatureData_SingleDay& daydata(int index) const;
+  inline ::TemperatureData_SingleDay* mutable_daydata(int index);
+  inline ::TemperatureData_SingleDay* add_daydata();
+  inline const ::google::protobuf::RepeatedPtrField< ::TemperatureData_SingleDay >&
+      daydata() const;
+  inline ::google::protobuf::RepeatedPtrField< ::TemperatureData_SingleDay >*
+      mutable_daydata();
 
   // @@protoc_insertion_point(class_scope:TemperatureData)
  private:
@@ -228,7 +358,7 @@ class TemperatureData : public ::google::protobuf::Message {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::RepeatedPtrField< ::TemperatureData_Temperature > temperatures_;
+  ::google::protobuf::RepeatedPtrField< ::TemperatureData_SingleDay > daydata_;
   ::google::protobuf::uint32 sensorid_;
   friend void  protobuf_AddDesc_TemperatureData_2eproto();
   friend void protobuf_AssignDesc_TemperatureData_2eproto();
@@ -292,7 +422,7 @@ inline void TemperatureData_Temperature::set_temperature(::google::protobuf::uin
   // @@protoc_insertion_point(field_set:TemperatureData.Temperature.temperature)
 }
 
-// required uint32 humidity = 3;
+// optional uint32 humidity = 3;
 inline bool TemperatureData_Temperature::has_humidity() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -316,7 +446,7 @@ inline void TemperatureData_Temperature::set_humidity(::google::protobuf::uint32
   // @@protoc_insertion_point(field_set:TemperatureData.Temperature.humidity)
 }
 
-// required uint32 uniqueId = 4;
+// optional uint32 uniqueId = 4;
 inline bool TemperatureData_Temperature::has_uniqueid() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -338,6 +468,187 @@ inline void TemperatureData_Temperature::set_uniqueid(::google::protobuf::uint32
   set_has_uniqueid();
   uniqueid_ = value;
   // @@protoc_insertion_point(field_set:TemperatureData.Temperature.uniqueId)
+}
+
+// -------------------------------------------------------------------
+
+// TemperatureData_SingleDay
+
+// required uint32 timestamp = 1;
+inline bool TemperatureData_SingleDay::has_timestamp() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void TemperatureData_SingleDay::set_has_timestamp() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void TemperatureData_SingleDay::clear_has_timestamp() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void TemperatureData_SingleDay::clear_timestamp() {
+  timestamp_ = 0u;
+  clear_has_timestamp();
+}
+inline ::google::protobuf::uint32 TemperatureData_SingleDay::timestamp() const {
+  // @@protoc_insertion_point(field_get:TemperatureData.SingleDay.timestamp)
+  return timestamp_;
+}
+inline void TemperatureData_SingleDay::set_timestamp(::google::protobuf::uint32 value) {
+  set_has_timestamp();
+  timestamp_ = value;
+  // @@protoc_insertion_point(field_set:TemperatureData.SingleDay.timestamp)
+}
+
+// optional .TemperatureData.Temperature currentTemperature = 2;
+inline bool TemperatureData_SingleDay::has_currenttemperature() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void TemperatureData_SingleDay::set_has_currenttemperature() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void TemperatureData_SingleDay::clear_has_currenttemperature() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void TemperatureData_SingleDay::clear_currenttemperature() {
+  if (currenttemperature_ != NULL) currenttemperature_->::TemperatureData_Temperature::Clear();
+  clear_has_currenttemperature();
+}
+inline const ::TemperatureData_Temperature& TemperatureData_SingleDay::currenttemperature() const {
+  // @@protoc_insertion_point(field_get:TemperatureData.SingleDay.currentTemperature)
+  return currenttemperature_ != NULL ? *currenttemperature_ : *default_instance_->currenttemperature_;
+}
+inline ::TemperatureData_Temperature* TemperatureData_SingleDay::mutable_currenttemperature() {
+  set_has_currenttemperature();
+  if (currenttemperature_ == NULL) currenttemperature_ = new ::TemperatureData_Temperature;
+  // @@protoc_insertion_point(field_mutable:TemperatureData.SingleDay.currentTemperature)
+  return currenttemperature_;
+}
+inline ::TemperatureData_Temperature* TemperatureData_SingleDay::release_currenttemperature() {
+  clear_has_currenttemperature();
+  ::TemperatureData_Temperature* temp = currenttemperature_;
+  currenttemperature_ = NULL;
+  return temp;
+}
+inline void TemperatureData_SingleDay::set_allocated_currenttemperature(::TemperatureData_Temperature* currenttemperature) {
+  delete currenttemperature_;
+  currenttemperature_ = currenttemperature;
+  if (currenttemperature) {
+    set_has_currenttemperature();
+  } else {
+    clear_has_currenttemperature();
+  }
+  // @@protoc_insertion_point(field_set_allocated:TemperatureData.SingleDay.currentTemperature)
+}
+
+// optional .TemperatureData.Temperature dayHigh = 3;
+inline bool TemperatureData_SingleDay::has_dayhigh() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void TemperatureData_SingleDay::set_has_dayhigh() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void TemperatureData_SingleDay::clear_has_dayhigh() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void TemperatureData_SingleDay::clear_dayhigh() {
+  if (dayhigh_ != NULL) dayhigh_->::TemperatureData_Temperature::Clear();
+  clear_has_dayhigh();
+}
+inline const ::TemperatureData_Temperature& TemperatureData_SingleDay::dayhigh() const {
+  // @@protoc_insertion_point(field_get:TemperatureData.SingleDay.dayHigh)
+  return dayhigh_ != NULL ? *dayhigh_ : *default_instance_->dayhigh_;
+}
+inline ::TemperatureData_Temperature* TemperatureData_SingleDay::mutable_dayhigh() {
+  set_has_dayhigh();
+  if (dayhigh_ == NULL) dayhigh_ = new ::TemperatureData_Temperature;
+  // @@protoc_insertion_point(field_mutable:TemperatureData.SingleDay.dayHigh)
+  return dayhigh_;
+}
+inline ::TemperatureData_Temperature* TemperatureData_SingleDay::release_dayhigh() {
+  clear_has_dayhigh();
+  ::TemperatureData_Temperature* temp = dayhigh_;
+  dayhigh_ = NULL;
+  return temp;
+}
+inline void TemperatureData_SingleDay::set_allocated_dayhigh(::TemperatureData_Temperature* dayhigh) {
+  delete dayhigh_;
+  dayhigh_ = dayhigh;
+  if (dayhigh) {
+    set_has_dayhigh();
+  } else {
+    clear_has_dayhigh();
+  }
+  // @@protoc_insertion_point(field_set_allocated:TemperatureData.SingleDay.dayHigh)
+}
+
+// optional .TemperatureData.Temperature dayLow = 4;
+inline bool TemperatureData_SingleDay::has_daylow() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void TemperatureData_SingleDay::set_has_daylow() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void TemperatureData_SingleDay::clear_has_daylow() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void TemperatureData_SingleDay::clear_daylow() {
+  if (daylow_ != NULL) daylow_->::TemperatureData_Temperature::Clear();
+  clear_has_daylow();
+}
+inline const ::TemperatureData_Temperature& TemperatureData_SingleDay::daylow() const {
+  // @@protoc_insertion_point(field_get:TemperatureData.SingleDay.dayLow)
+  return daylow_ != NULL ? *daylow_ : *default_instance_->daylow_;
+}
+inline ::TemperatureData_Temperature* TemperatureData_SingleDay::mutable_daylow() {
+  set_has_daylow();
+  if (daylow_ == NULL) daylow_ = new ::TemperatureData_Temperature;
+  // @@protoc_insertion_point(field_mutable:TemperatureData.SingleDay.dayLow)
+  return daylow_;
+}
+inline ::TemperatureData_Temperature* TemperatureData_SingleDay::release_daylow() {
+  clear_has_daylow();
+  ::TemperatureData_Temperature* temp = daylow_;
+  daylow_ = NULL;
+  return temp;
+}
+inline void TemperatureData_SingleDay::set_allocated_daylow(::TemperatureData_Temperature* daylow) {
+  delete daylow_;
+  daylow_ = daylow;
+  if (daylow) {
+    set_has_daylow();
+  } else {
+    clear_has_daylow();
+  }
+  // @@protoc_insertion_point(field_set_allocated:TemperatureData.SingleDay.dayLow)
+}
+
+// repeated .TemperatureData.Temperature temperatures = 5;
+inline int TemperatureData_SingleDay::temperatures_size() const {
+  return temperatures_.size();
+}
+inline void TemperatureData_SingleDay::clear_temperatures() {
+  temperatures_.Clear();
+}
+inline const ::TemperatureData_Temperature& TemperatureData_SingleDay::temperatures(int index) const {
+  // @@protoc_insertion_point(field_get:TemperatureData.SingleDay.temperatures)
+  return temperatures_.Get(index);
+}
+inline ::TemperatureData_Temperature* TemperatureData_SingleDay::mutable_temperatures(int index) {
+  // @@protoc_insertion_point(field_mutable:TemperatureData.SingleDay.temperatures)
+  return temperatures_.Mutable(index);
+}
+inline ::TemperatureData_Temperature* TemperatureData_SingleDay::add_temperatures() {
+  // @@protoc_insertion_point(field_add:TemperatureData.SingleDay.temperatures)
+  return temperatures_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::TemperatureData_Temperature >&
+TemperatureData_SingleDay::temperatures() const {
+  // @@protoc_insertion_point(field_list:TemperatureData.SingleDay.temperatures)
+  return temperatures_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::TemperatureData_Temperature >*
+TemperatureData_SingleDay::mutable_temperatures() {
+  // @@protoc_insertion_point(field_mutable_list:TemperatureData.SingleDay.temperatures)
+  return &temperatures_;
 }
 
 // -------------------------------------------------------------------
@@ -368,34 +679,34 @@ inline void TemperatureData::set_sensorid(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:TemperatureData.sensorId)
 }
 
-// repeated .TemperatureData.Temperature temperatures = 2;
-inline int TemperatureData::temperatures_size() const {
-  return temperatures_.size();
+// repeated .TemperatureData.SingleDay dayData = 2;
+inline int TemperatureData::daydata_size() const {
+  return daydata_.size();
 }
-inline void TemperatureData::clear_temperatures() {
-  temperatures_.Clear();
+inline void TemperatureData::clear_daydata() {
+  daydata_.Clear();
 }
-inline const ::TemperatureData_Temperature& TemperatureData::temperatures(int index) const {
-  // @@protoc_insertion_point(field_get:TemperatureData.temperatures)
-  return temperatures_.Get(index);
+inline const ::TemperatureData_SingleDay& TemperatureData::daydata(int index) const {
+  // @@protoc_insertion_point(field_get:TemperatureData.dayData)
+  return daydata_.Get(index);
 }
-inline ::TemperatureData_Temperature* TemperatureData::mutable_temperatures(int index) {
-  // @@protoc_insertion_point(field_mutable:TemperatureData.temperatures)
-  return temperatures_.Mutable(index);
+inline ::TemperatureData_SingleDay* TemperatureData::mutable_daydata(int index) {
+  // @@protoc_insertion_point(field_mutable:TemperatureData.dayData)
+  return daydata_.Mutable(index);
 }
-inline ::TemperatureData_Temperature* TemperatureData::add_temperatures() {
-  // @@protoc_insertion_point(field_add:TemperatureData.temperatures)
-  return temperatures_.Add();
+inline ::TemperatureData_SingleDay* TemperatureData::add_daydata() {
+  // @@protoc_insertion_point(field_add:TemperatureData.dayData)
+  return daydata_.Add();
 }
-inline const ::google::protobuf::RepeatedPtrField< ::TemperatureData_Temperature >&
-TemperatureData::temperatures() const {
-  // @@protoc_insertion_point(field_list:TemperatureData.temperatures)
-  return temperatures_;
+inline const ::google::protobuf::RepeatedPtrField< ::TemperatureData_SingleDay >&
+TemperatureData::daydata() const {
+  // @@protoc_insertion_point(field_list:TemperatureData.dayData)
+  return daydata_;
 }
-inline ::google::protobuf::RepeatedPtrField< ::TemperatureData_Temperature >*
-TemperatureData::mutable_temperatures() {
-  // @@protoc_insertion_point(field_mutable_list:TemperatureData.temperatures)
-  return &temperatures_;
+inline ::google::protobuf::RepeatedPtrField< ::TemperatureData_SingleDay >*
+TemperatureData::mutable_daydata() {
+  // @@protoc_insertion_point(field_mutable_list:TemperatureData.dayData)
+  return &daydata_;
 }
 
 

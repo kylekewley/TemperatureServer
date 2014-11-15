@@ -32,12 +32,13 @@ void protobuf_AssignDesc_TemperatureRequest_2eproto() {
       "TemperatureRequest.proto");
   GOOGLE_CHECK(file != NULL);
   TemperatureRequest_descriptor_ = file->message_type(0);
-  static const int TemperatureRequest_offsets_[5] = {
+  static const int TemperatureRequest_offsets_[6] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TemperatureRequest, sensorid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TemperatureRequest, starttime_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TemperatureRequest, endtime_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TemperatureRequest, interval_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TemperatureRequest, secondsbetweenreadings_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TemperatureRequest, summaryonly_),
   };
   TemperatureRequest_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -80,10 +81,11 @@ void protobuf_AddDesc_TemperatureRequest_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\030TemperatureRequest.proto\"|\n\022Temperatur"
-    "eRequest\022\020\n\010sensorId\030\001 \002(\r\022\021\n\tstartTime\030"
-    "\002 \001(\r\022\017\n\007endTime\030\003 \001(\r\022\020\n\010interval\030\004 \001(\r"
-    "\022\036\n\026secondsBetweenReadings\030\005 \001(\r", 152);
+    "\n\030TemperatureRequest.proto\"\221\001\n\022Temperatu"
+    "reRequest\022\020\n\010sensorId\030\001 \002(\r\022\021\n\tstartTime"
+    "\030\002 \001(\r\022\017\n\007endTime\030\003 \001(\r\022\020\n\010interval\030\004 \001("
+    "\r\022\036\n\026secondsBetweenReadings\030\005 \001(\r\022\023\n\013sum"
+    "maryOnly\030\006 \001(\010", 174);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "TemperatureRequest.proto", &protobuf_RegisterTypes);
   TemperatureRequest::default_instance_ = new TemperatureRequest();
@@ -106,6 +108,7 @@ const int TemperatureRequest::kStartTimeFieldNumber;
 const int TemperatureRequest::kEndTimeFieldNumber;
 const int TemperatureRequest::kIntervalFieldNumber;
 const int TemperatureRequest::kSecondsBetweenReadingsFieldNumber;
+const int TemperatureRequest::kSummaryOnlyFieldNumber;
 #endif  // !_MSC_VER
 
 TemperatureRequest::TemperatureRequest()
@@ -131,6 +134,7 @@ void TemperatureRequest::SharedCtor() {
   endtime_ = 0u;
   interval_ = 0u;
   secondsbetweenreadings_ = 0u;
+  summaryonly_ = false;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -176,8 +180,8 @@ void TemperatureRequest::Clear() {
     ::memset(&first, 0, n);                                \
   } while (0)
 
-  if (_has_bits_[0 / 32] & 31) {
-    ZR_(sensorid_, secondsbetweenreadings_);
+  if (_has_bits_[0 / 32] & 63) {
+    ZR_(sensorid_, summaryonly_);
   }
 
 #undef OFFSET_OF_FIELD_
@@ -267,6 +271,21 @@ bool TemperatureRequest::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(48)) goto parse_summaryOnly;
+        break;
+      }
+
+      // optional bool summaryOnly = 6;
+      case 6: {
+        if (tag == 48) {
+         parse_summaryOnly:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &summaryonly_)));
+          set_has_summaryonly();
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -321,6 +340,11 @@ void TemperatureRequest::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->secondsbetweenreadings(), output);
   }
 
+  // optional bool summaryOnly = 6;
+  if (has_summaryonly()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(6, this->summaryonly(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -354,6 +378,11 @@ void TemperatureRequest::SerializeWithCachedSizes(
   // optional uint32 secondsBetweenReadings = 5;
   if (has_secondsbetweenreadings()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->secondsbetweenreadings(), target);
+  }
+
+  // optional bool summaryOnly = 6;
+  if (has_summaryonly()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(6, this->summaryonly(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -403,6 +432,11 @@ int TemperatureRequest::ByteSize() const {
           this->secondsbetweenreadings());
     }
 
+    // optional bool summaryOnly = 6;
+    if (has_summaryonly()) {
+      total_size += 1 + 1;
+    }
+
   }
   if (!unknown_fields().empty()) {
     total_size +=
@@ -445,6 +479,9 @@ void TemperatureRequest::MergeFrom(const TemperatureRequest& from) {
     if (from.has_secondsbetweenreadings()) {
       set_secondsbetweenreadings(from.secondsbetweenreadings());
     }
+    if (from.has_summaryonly()) {
+      set_summaryonly(from.summaryonly());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -474,6 +511,7 @@ void TemperatureRequest::Swap(TemperatureRequest* other) {
     std::swap(endtime_, other->endtime_);
     std::swap(interval_, other->interval_);
     std::swap(secondsbetweenreadings_, other->secondsbetweenreadings_);
+    std::swap(summaryonly_, other->summaryonly_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

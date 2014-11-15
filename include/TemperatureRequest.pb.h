@@ -123,6 +123,13 @@ class TemperatureRequest : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 secondsbetweenreadings() const;
   inline void set_secondsbetweenreadings(::google::protobuf::uint32 value);
 
+  // optional bool summaryOnly = 6;
+  inline bool has_summaryonly() const;
+  inline void clear_summaryonly();
+  static const int kSummaryOnlyFieldNumber = 6;
+  inline bool summaryonly() const;
+  inline void set_summaryonly(bool value);
+
   // @@protoc_insertion_point(class_scope:TemperatureRequest)
  private:
   inline void set_has_sensorid();
@@ -135,6 +142,8 @@ class TemperatureRequest : public ::google::protobuf::Message {
   inline void clear_has_interval();
   inline void set_has_secondsbetweenreadings();
   inline void clear_has_secondsbetweenreadings();
+  inline void set_has_summaryonly();
+  inline void clear_has_summaryonly();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -145,6 +154,7 @@ class TemperatureRequest : public ::google::protobuf::Message {
   ::google::protobuf::uint32 endtime_;
   ::google::protobuf::uint32 interval_;
   ::google::protobuf::uint32 secondsbetweenreadings_;
+  bool summaryonly_;
   friend void  protobuf_AddDesc_TemperatureRequest_2eproto();
   friend void protobuf_AssignDesc_TemperatureRequest_2eproto();
   friend void protobuf_ShutdownFile_TemperatureRequest_2eproto();
@@ -277,6 +287,30 @@ inline void TemperatureRequest::set_secondsbetweenreadings(::google::protobuf::u
   set_has_secondsbetweenreadings();
   secondsbetweenreadings_ = value;
   // @@protoc_insertion_point(field_set:TemperatureRequest.secondsBetweenReadings)
+}
+
+// optional bool summaryOnly = 6;
+inline bool TemperatureRequest::has_summaryonly() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void TemperatureRequest::set_has_summaryonly() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void TemperatureRequest::clear_has_summaryonly() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void TemperatureRequest::clear_summaryonly() {
+  summaryonly_ = false;
+  clear_has_summaryonly();
+}
+inline bool TemperatureRequest::summaryonly() const {
+  // @@protoc_insertion_point(field_get:TemperatureRequest.summaryOnly)
+  return summaryonly_;
+}
+inline void TemperatureRequest::set_summaryonly(bool value) {
+  set_has_summaryonly();
+  summaryonly_ = value;
+  // @@protoc_insertion_point(field_set:TemperatureRequest.summaryOnly)
 }
 
 

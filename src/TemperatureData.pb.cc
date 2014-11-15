@@ -24,6 +24,9 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* TemperatureData_Temperature_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   TemperatureData_Temperature_reflection_ = NULL;
+const ::google::protobuf::Descriptor* TemperatureData_SingleDay_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  TemperatureData_SingleDay_reflection_ = NULL;
 
 }  // namespace
 
@@ -37,7 +40,7 @@ void protobuf_AssignDesc_TemperatureData_2eproto() {
   TemperatureData_descriptor_ = file->message_type(0);
   static const int TemperatureData_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TemperatureData, sensorid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TemperatureData, temperatures_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TemperatureData, daydata_),
   };
   TemperatureData_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -68,6 +71,25 @@ void protobuf_AssignDesc_TemperatureData_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(TemperatureData_Temperature));
+  TemperatureData_SingleDay_descriptor_ = TemperatureData_descriptor_->nested_type(1);
+  static const int TemperatureData_SingleDay_offsets_[5] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TemperatureData_SingleDay, timestamp_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TemperatureData_SingleDay, currenttemperature_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TemperatureData_SingleDay, dayhigh_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TemperatureData_SingleDay, daylow_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TemperatureData_SingleDay, temperatures_),
+  };
+  TemperatureData_SingleDay_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      TemperatureData_SingleDay_descriptor_,
+      TemperatureData_SingleDay::default_instance_,
+      TemperatureData_SingleDay_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TemperatureData_SingleDay, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TemperatureData_SingleDay, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(TemperatureData_SingleDay));
 }
 
 namespace {
@@ -84,6 +106,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
     TemperatureData_descriptor_, &TemperatureData::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     TemperatureData_Temperature_descriptor_, &TemperatureData_Temperature::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    TemperatureData_SingleDay_descriptor_, &TemperatureData_SingleDay::default_instance());
 }
 
 }  // namespace
@@ -93,6 +117,8 @@ void protobuf_ShutdownFile_TemperatureData_2eproto() {
   delete TemperatureData_reflection_;
   delete TemperatureData_Temperature::default_instance_;
   delete TemperatureData_Temperature_reflection_;
+  delete TemperatureData_SingleDay::default_instance_;
+  delete TemperatureData_SingleDay_reflection_;
 }
 
 void protobuf_AddDesc_TemperatureData_2eproto() {
@@ -102,18 +128,25 @@ void protobuf_AddDesc_TemperatureData_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\025TemperatureData.proto\"\262\001\n\017TemperatureD"
-    "ata\022\020\n\010sensorId\030\001 \002(\r\0222\n\014temperatures\030\002 "
-    "\003(\0132\034.TemperatureData.Temperature\032Y\n\013Tem"
-    "perature\022\021\n\ttimestamp\030\001 \002(\r\022\023\n\013temperatu"
-    "re\030\002 \002(\r\022\020\n\010humidity\030\003 \002(\r\022\020\n\010uniqueId\030\004"
-    " \002(\r", 204);
+    "\n\025TemperatureData.proto\"\227\003\n\017TemperatureD"
+    "ata\022\020\n\010sensorId\030\001 \002(\r\022+\n\007dayData\030\002 \003(\0132\032"
+    ".TemperatureData.SingleDay\032Y\n\013Temperatur"
+    "e\022\021\n\ttimestamp\030\001 \002(\r\022\023\n\013temperature\030\002 \002("
+    "\r\022\020\n\010humidity\030\003 \001(\r\022\020\n\010uniqueId\030\004 \001(\r\032\351\001"
+    "\n\tSingleDay\022\021\n\ttimestamp\030\001 \002(\r\0228\n\022curren"
+    "tTemperature\030\002 \001(\0132\034.TemperatureData.Tem"
+    "perature\022-\n\007dayHigh\030\003 \001(\0132\034.TemperatureD"
+    "ata.Temperature\022,\n\006dayLow\030\004 \001(\0132\034.Temper"
+    "atureData.Temperature\0222\n\014temperatures\030\005 "
+    "\003(\0132\034.TemperatureData.Temperature", 433);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "TemperatureData.proto", &protobuf_RegisterTypes);
   TemperatureData::default_instance_ = new TemperatureData();
   TemperatureData_Temperature::default_instance_ = new TemperatureData_Temperature();
+  TemperatureData_SingleDay::default_instance_ = new TemperatureData_SingleDay();
   TemperatureData::default_instance_->InitAsDefaultInstance();
   TemperatureData_Temperature::default_instance_->InitAsDefaultInstance();
+  TemperatureData_SingleDay::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_TemperatureData_2eproto);
 }
 
@@ -248,7 +281,7 @@ bool TemperatureData_Temperature::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 humidity = 3;
+      // optional uint32 humidity = 3;
       case 3: {
         if (tag == 24) {
          parse_humidity:
@@ -263,7 +296,7 @@ bool TemperatureData_Temperature::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 uniqueId = 4;
+      // optional uint32 uniqueId = 4;
       case 4: {
         if (tag == 32) {
          parse_uniqueId:
@@ -313,12 +346,12 @@ void TemperatureData_Temperature::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->temperature(), output);
   }
 
-  // required uint32 humidity = 3;
+  // optional uint32 humidity = 3;
   if (has_humidity()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->humidity(), output);
   }
 
-  // required uint32 uniqueId = 4;
+  // optional uint32 uniqueId = 4;
   if (has_uniqueid()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->uniqueid(), output);
   }
@@ -343,12 +376,12 @@ void TemperatureData_Temperature::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->temperature(), target);
   }
 
-  // required uint32 humidity = 3;
+  // optional uint32 humidity = 3;
   if (has_humidity()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->humidity(), target);
   }
 
-  // required uint32 uniqueId = 4;
+  // optional uint32 uniqueId = 4;
   if (has_uniqueid()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->uniqueid(), target);
   }
@@ -379,14 +412,14 @@ int TemperatureData_Temperature::ByteSize() const {
           this->temperature());
     }
 
-    // required uint32 humidity = 3;
+    // optional uint32 humidity = 3;
     if (has_humidity()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->humidity());
     }
 
-    // required uint32 uniqueId = 4;
+    // optional uint32 uniqueId = 4;
     if (has_uniqueid()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
@@ -449,7 +482,7 @@ void TemperatureData_Temperature::CopyFrom(const TemperatureData_Temperature& fr
 }
 
 bool TemperatureData_Temperature::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
 
   return true;
 }
@@ -478,8 +511,414 @@ void TemperatureData_Temperature::Swap(TemperatureData_Temperature* other) {
 // -------------------------------------------------------------------
 
 #ifndef _MSC_VER
+const int TemperatureData_SingleDay::kTimestampFieldNumber;
+const int TemperatureData_SingleDay::kCurrentTemperatureFieldNumber;
+const int TemperatureData_SingleDay::kDayHighFieldNumber;
+const int TemperatureData_SingleDay::kDayLowFieldNumber;
+const int TemperatureData_SingleDay::kTemperaturesFieldNumber;
+#endif  // !_MSC_VER
+
+TemperatureData_SingleDay::TemperatureData_SingleDay()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:TemperatureData.SingleDay)
+}
+
+void TemperatureData_SingleDay::InitAsDefaultInstance() {
+  currenttemperature_ = const_cast< ::TemperatureData_Temperature*>(&::TemperatureData_Temperature::default_instance());
+  dayhigh_ = const_cast< ::TemperatureData_Temperature*>(&::TemperatureData_Temperature::default_instance());
+  daylow_ = const_cast< ::TemperatureData_Temperature*>(&::TemperatureData_Temperature::default_instance());
+}
+
+TemperatureData_SingleDay::TemperatureData_SingleDay(const TemperatureData_SingleDay& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:TemperatureData.SingleDay)
+}
+
+void TemperatureData_SingleDay::SharedCtor() {
+  _cached_size_ = 0;
+  timestamp_ = 0u;
+  currenttemperature_ = NULL;
+  dayhigh_ = NULL;
+  daylow_ = NULL;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+TemperatureData_SingleDay::~TemperatureData_SingleDay() {
+  // @@protoc_insertion_point(destructor:TemperatureData.SingleDay)
+  SharedDtor();
+}
+
+void TemperatureData_SingleDay::SharedDtor() {
+  if (this != default_instance_) {
+    delete currenttemperature_;
+    delete dayhigh_;
+    delete daylow_;
+  }
+}
+
+void TemperatureData_SingleDay::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* TemperatureData_SingleDay::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return TemperatureData_SingleDay_descriptor_;
+}
+
+const TemperatureData_SingleDay& TemperatureData_SingleDay::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_TemperatureData_2eproto();
+  return *default_instance_;
+}
+
+TemperatureData_SingleDay* TemperatureData_SingleDay::default_instance_ = NULL;
+
+TemperatureData_SingleDay* TemperatureData_SingleDay::New() const {
+  return new TemperatureData_SingleDay;
+}
+
+void TemperatureData_SingleDay::Clear() {
+  if (_has_bits_[0 / 32] & 15) {
+    timestamp_ = 0u;
+    if (has_currenttemperature()) {
+      if (currenttemperature_ != NULL) currenttemperature_->::TemperatureData_Temperature::Clear();
+    }
+    if (has_dayhigh()) {
+      if (dayhigh_ != NULL) dayhigh_->::TemperatureData_Temperature::Clear();
+    }
+    if (has_daylow()) {
+      if (daylow_ != NULL) daylow_->::TemperatureData_Temperature::Clear();
+    }
+  }
+  temperatures_.Clear();
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool TemperatureData_SingleDay::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:TemperatureData.SingleDay)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required uint32 timestamp = 1;
+      case 1: {
+        if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &timestamp_)));
+          set_has_timestamp();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_currentTemperature;
+        break;
+      }
+
+      // optional .TemperatureData.Temperature currentTemperature = 2;
+      case 2: {
+        if (tag == 18) {
+         parse_currentTemperature:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_currenttemperature()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(26)) goto parse_dayHigh;
+        break;
+      }
+
+      // optional .TemperatureData.Temperature dayHigh = 3;
+      case 3: {
+        if (tag == 26) {
+         parse_dayHigh:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_dayhigh()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(34)) goto parse_dayLow;
+        break;
+      }
+
+      // optional .TemperatureData.Temperature dayLow = 4;
+      case 4: {
+        if (tag == 34) {
+         parse_dayLow:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_daylow()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(42)) goto parse_temperatures;
+        break;
+      }
+
+      // repeated .TemperatureData.Temperature temperatures = 5;
+      case 5: {
+        if (tag == 42) {
+         parse_temperatures:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+                input, add_temperatures()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(42)) goto parse_temperatures;
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:TemperatureData.SingleDay)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:TemperatureData.SingleDay)
+  return false;
+#undef DO_
+}
+
+void TemperatureData_SingleDay::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:TemperatureData.SingleDay)
+  // required uint32 timestamp = 1;
+  if (has_timestamp()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->timestamp(), output);
+  }
+
+  // optional .TemperatureData.Temperature currentTemperature = 2;
+  if (has_currenttemperature()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      2, this->currenttemperature(), output);
+  }
+
+  // optional .TemperatureData.Temperature dayHigh = 3;
+  if (has_dayhigh()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      3, this->dayhigh(), output);
+  }
+
+  // optional .TemperatureData.Temperature dayLow = 4;
+  if (has_daylow()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      4, this->daylow(), output);
+  }
+
+  // repeated .TemperatureData.Temperature temperatures = 5;
+  for (int i = 0; i < this->temperatures_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      5, this->temperatures(i), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:TemperatureData.SingleDay)
+}
+
+::google::protobuf::uint8* TemperatureData_SingleDay::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:TemperatureData.SingleDay)
+  // required uint32 timestamp = 1;
+  if (has_timestamp()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->timestamp(), target);
+  }
+
+  // optional .TemperatureData.Temperature currentTemperature = 2;
+  if (has_currenttemperature()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        2, this->currenttemperature(), target);
+  }
+
+  // optional .TemperatureData.Temperature dayHigh = 3;
+  if (has_dayhigh()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        3, this->dayhigh(), target);
+  }
+
+  // optional .TemperatureData.Temperature dayLow = 4;
+  if (has_daylow()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        4, this->daylow(), target);
+  }
+
+  // repeated .TemperatureData.Temperature temperatures = 5;
+  for (int i = 0; i < this->temperatures_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        5, this->temperatures(i), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:TemperatureData.SingleDay)
+  return target;
+}
+
+int TemperatureData_SingleDay::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required uint32 timestamp = 1;
+    if (has_timestamp()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->timestamp());
+    }
+
+    // optional .TemperatureData.Temperature currentTemperature = 2;
+    if (has_currenttemperature()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->currenttemperature());
+    }
+
+    // optional .TemperatureData.Temperature dayHigh = 3;
+    if (has_dayhigh()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->dayhigh());
+    }
+
+    // optional .TemperatureData.Temperature dayLow = 4;
+    if (has_daylow()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->daylow());
+    }
+
+  }
+  // repeated .TemperatureData.Temperature temperatures = 5;
+  total_size += 1 * this->temperatures_size();
+  for (int i = 0; i < this->temperatures_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->temperatures(i));
+  }
+
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void TemperatureData_SingleDay::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const TemperatureData_SingleDay* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const TemperatureData_SingleDay*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void TemperatureData_SingleDay::MergeFrom(const TemperatureData_SingleDay& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  temperatures_.MergeFrom(from.temperatures_);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_timestamp()) {
+      set_timestamp(from.timestamp());
+    }
+    if (from.has_currenttemperature()) {
+      mutable_currenttemperature()->::TemperatureData_Temperature::MergeFrom(from.currenttemperature());
+    }
+    if (from.has_dayhigh()) {
+      mutable_dayhigh()->::TemperatureData_Temperature::MergeFrom(from.dayhigh());
+    }
+    if (from.has_daylow()) {
+      mutable_daylow()->::TemperatureData_Temperature::MergeFrom(from.daylow());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void TemperatureData_SingleDay::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void TemperatureData_SingleDay::CopyFrom(const TemperatureData_SingleDay& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool TemperatureData_SingleDay::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+
+  if (has_currenttemperature()) {
+    if (!this->currenttemperature().IsInitialized()) return false;
+  }
+  if (has_dayhigh()) {
+    if (!this->dayhigh().IsInitialized()) return false;
+  }
+  if (has_daylow()) {
+    if (!this->daylow().IsInitialized()) return false;
+  }
+  if (!::google::protobuf::internal::AllAreInitialized(this->temperatures())) return false;
+  return true;
+}
+
+void TemperatureData_SingleDay::Swap(TemperatureData_SingleDay* other) {
+  if (other != this) {
+    std::swap(timestamp_, other->timestamp_);
+    std::swap(currenttemperature_, other->currenttemperature_);
+    std::swap(dayhigh_, other->dayhigh_);
+    std::swap(daylow_, other->daylow_);
+    temperatures_.Swap(&other->temperatures_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata TemperatureData_SingleDay::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = TemperatureData_SingleDay_descriptor_;
+  metadata.reflection = TemperatureData_SingleDay_reflection_;
+  return metadata;
+}
+
+
+// -------------------------------------------------------------------
+
+#ifndef _MSC_VER
 const int TemperatureData::kSensorIdFieldNumber;
-const int TemperatureData::kTemperaturesFieldNumber;
+const int TemperatureData::kDayDataFieldNumber;
 #endif  // !_MSC_VER
 
 TemperatureData::TemperatureData()
@@ -537,7 +976,7 @@ TemperatureData* TemperatureData::New() const {
 
 void TemperatureData::Clear() {
   sensorid_ = 0u;
-  temperatures_.Clear();
+  daydata_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
@@ -562,20 +1001,20 @@ bool TemperatureData::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_temperatures;
+        if (input->ExpectTag(18)) goto parse_dayData;
         break;
       }
 
-      // repeated .TemperatureData.Temperature temperatures = 2;
+      // repeated .TemperatureData.SingleDay dayData = 2;
       case 2: {
         if (tag == 18) {
-         parse_temperatures:
+         parse_dayData:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-                input, add_temperatures()));
+                input, add_daydata()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_temperatures;
+        if (input->ExpectTag(18)) goto parse_dayData;
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -610,10 +1049,10 @@ void TemperatureData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->sensorid(), output);
   }
 
-  // repeated .TemperatureData.Temperature temperatures = 2;
-  for (int i = 0; i < this->temperatures_size(); i++) {
+  // repeated .TemperatureData.SingleDay dayData = 2;
+  for (int i = 0; i < this->daydata_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      2, this->temperatures(i), output);
+      2, this->daydata(i), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -631,11 +1070,11 @@ void TemperatureData::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->sensorid(), target);
   }
 
-  // repeated .TemperatureData.Temperature temperatures = 2;
-  for (int i = 0; i < this->temperatures_size(); i++) {
+  // repeated .TemperatureData.SingleDay dayData = 2;
+  for (int i = 0; i < this->daydata_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        2, this->temperatures(i), target);
+        2, this->daydata(i), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -658,12 +1097,12 @@ int TemperatureData::ByteSize() const {
     }
 
   }
-  // repeated .TemperatureData.Temperature temperatures = 2;
-  total_size += 1 * this->temperatures_size();
-  for (int i = 0; i < this->temperatures_size(); i++) {
+  // repeated .TemperatureData.SingleDay dayData = 2;
+  total_size += 1 * this->daydata_size();
+  for (int i = 0; i < this->daydata_size(); i++) {
     total_size +=
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->temperatures(i));
+        this->daydata(i));
   }
 
   if (!unknown_fields().empty()) {
@@ -691,7 +1130,7 @@ void TemperatureData::MergeFrom(const ::google::protobuf::Message& from) {
 
 void TemperatureData::MergeFrom(const TemperatureData& from) {
   GOOGLE_CHECK_NE(&from, this);
-  temperatures_.MergeFrom(from.temperatures_);
+  daydata_.MergeFrom(from.daydata_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_sensorid()) {
       set_sensorid(from.sensorid());
@@ -715,14 +1154,14 @@ void TemperatureData::CopyFrom(const TemperatureData& from) {
 bool TemperatureData::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
-  if (!::google::protobuf::internal::AllAreInitialized(this->temperatures())) return false;
+  if (!::google::protobuf::internal::AllAreInitialized(this->daydata())) return false;
   return true;
 }
 
 void TemperatureData::Swap(TemperatureData* other) {
   if (other != this) {
     std::swap(sensorid_, other->sensorid_);
-    temperatures_.Swap(&other->temperatures_);
+    daydata_.Swap(&other->daydata_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

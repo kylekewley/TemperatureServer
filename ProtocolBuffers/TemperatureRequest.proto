@@ -1,7 +1,31 @@
 message TemperatureRequest {
     required uint32 sensorId = 1;
+
     optional uint32 startTime = 2; // Seconds since Jan 1 1970 UTC
     optional uint32 endTime = 3;
     optional uint32 interval = 4; // Number of seconds to return data for
+
     optional uint32 secondsBetweenReadings = 5;
+    optional bool summaryOnly = 6;
 }
+
+/*
+Description of timing requests.
+
+|---+---+---+---------------------------+--------------------|
+| s | e | i | StartTime                 | EndTime            |
+|---+---+---+---------------------------+--------------------|
+| 0 | 0 | 0 | 12:00AM                   | CurrentTime        |
+| 0 | 0 | 1 | CurrentTime-abs(interval) | CurrentTime        |
+| 0 | 1 | 0 | INVALID                   | INVALID            |
+| 1 | 0 | 0 | startTime                 | CurrentTime        |
+| 0 | 1 | 1 | INVALID                   | INVALID            |
+| 1 | 1 | 0 | startTime                 | endTime            |
+| 1 | 0 | 1 | startTime                 | startTime+interval |
+| 1 | 1 | 1 | INVALID                   | INVALID            |
+|---+---+---+---------------------------+--------------------|
+
+If summaryOnly is true, secondsBetweenReadings will be ignored.
+
+
+*/

@@ -33,13 +33,14 @@ const std::string TemperatureServer::groupID = "TemperatureGroup";
 const std::string TemperatureServer::HistoryDatabasePath = "./temp_db.sqlite";
 const std::string TemperatureServer::HistoryTableName = "temp_history";
 
+int updateInterval = 60;
 
 int main(int argc, char **argv) {
     int portNumber = DEFAULT_PORT_NUMBER;
 
 
     while (1) {
-        int c = getopt_long(argc, argv, "p:", longOptions, NULL);
+        int c = getopt_long(argc, argv, "ip:", longOptions, NULL);
         if (c == -1)
             break;
         stringstream arg;
@@ -56,6 +57,8 @@ int main(int argc, char **argv) {
                     portNumber = portInput;
                 }
                 break;
+            case 'i':
+                arg >> updateInterval;
             case '?':
                 break;
             default:
@@ -111,7 +114,7 @@ TemperatureServer::TemperatureServer(std::vector<Sensor>& sensors, ClientManager
 
 void TemperatureServer::blockAndUpdateSensors() {
     const int dups = 3;
-    int UpdateInterval = 60; // 60 seconds between updates
+    int UpdateInterval = updateInterval; // 60 seconds between updates
     int tmpCutoff = 10; // 1 degree
     int humCutoff = 100; // 10%
 
@@ -146,20 +149,34 @@ void TemperatureServer::blockAndUpdateSensors() {
             avgTmp /= dups;
             avgHum /= dups;
 
+            bool goodReadings = true;
             for (int j = 0; j < dups; ++j) {
                 if (::abs(avgTmp - temps[i][j]) > tmpCutoff) {
-                    --i;
-                    continue;
+                    goodReadings = false;
+                    break;
                 }
 
                 if (::abs(avgHum - hums[i][j]) > humCutoff) {
-                    --i;
-                    continue;
+                    goodReadings = false;
+                    break;;
                 }
+            }
+
+            if (!goodReadings) {
+                --i;
+                continue;
             }
 
             // Data was good
             addTemperatureHistory(sensors[i].sensorId, avgTmp, avgHum);
+
+            std::cout << "Measured temps: ";
+            for (int j = 0; j < dups; ++j) {
+                std::cout << std::to_string(temps[i][j]) << ", ";
+            }
+            std::cout << std::endl;
+            std::cout << "Adding to db. Temperature: " << std::to_string(avgTmp)
+                << " Humidity: " << std::to_string(avgHum) << std::endl;
             TemperatureData d;
             d.set_sensorid(sensors[i].sensorId);
 
