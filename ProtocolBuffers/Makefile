@@ -7,7 +7,7 @@ CPP_GEN := $(GEN_CC) $(GEN_H)
 
 PROTO_GEN := $(GEN_CC) $(GEN_H) $(GEN_JAVA)
 
-JAVA_INSTALL= ./		#~/AndroidStudioProjects/TemperatureClient/app/src/main/java/kylekewley/garagedooropener/protocolbuffers
+JAVA_INSTALL= ~/AndroidStudioProjects/TemperatureClient/app/src/main/java/com/kylekewley/temperatureclient/protocolbuffers
 CPP_INSTALL_H=../include
 CPP_INSTALL_CC=../src
 
