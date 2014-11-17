@@ -7,7 +7,8 @@ message TemperatureData {
     }
 
     message SingleDay {
-        required uint32 timestamp = 1;
+        optional uint32 timestamp = 1;
+
         optional Temperature currentTemperature = 2;
         optional Temperature dayHigh = 3;
         optional Temperature dayLow = 4;
@@ -16,5 +17,6 @@ message TemperatureData {
     }
 
     required uint32 sensorId = 1;
+
     repeated SingleDay dayData = 2;
 }

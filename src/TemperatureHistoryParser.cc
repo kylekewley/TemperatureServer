@@ -4,41 +4,40 @@
 ProtocolBuffer* TemperatureHistoryParser::
 parseBuffer(const TemperatureRequest* command, int) const {
 
-    int32_t startTime = _parent.timeSinceEpoch(); //The current time
-    int32_t interval = -60*60*24; //Negative 24 hours
-    int timeBetweenReadings = 60; //Seconds
+    int32_t startTime = DatabaseManager::localDayStartEpoch();
+    int32_t endTime = DatabaseManager::timeSinceEpoch();
+
+    int timeBetweenReadings = 0; //Seconds
+
+    bool summaryOnly = false;
 
     if (command->has_secondsbetweenreadings())
         timeBetweenReadings = command->secondsbetweenreadings();
 
-    if (command->has_starttime() && command->has_interval()) {
+    if (command->has_summaryonly())
+        summaryOnly = command->summaryonly();
+
+
+    if (command->has_starttime()) {
         startTime = command->starttime();
-        interval = command->interval();
 
-    }else if (command->has_starttime() && command->has_endtime()) {
-        //startTime and endtime
-        startTime = command->starttime();
-        interval = command->endtime() - startTime;
-
-    }else if (command->has_starttime()) {
-
-        // Set the interval to the current time - startTime
-        interval = startTime - command->starttime();
-
-        //Starttime, no interval or endtime
-        startTime = command->starttime();
-    }else if (command->has_interval()){
-        // Interval and no startTime
-
-        // Backwards interval seconds from now
-        interval = -::abs(command->interval());
+        if (command->has_endtime()) {
+            // Start and end
+            endTime = command->endtime();
+        }else if (command->has_interval()) {
+            // Start and interval
+            endTime = startTime + command->interval();
+        }
+    }else if (command->has_interval()) {
+        // Just an interval time
+        startTime = DatabaseManager::timeSinceEpoch()-::abs(command->interval());
     }
 
     cout << "Requesting history with interval: " << to_string(startTime)
-        << " to " << to_string(startTime+interval) << endl;
+        << " to " << to_string(endTime) << endl;
 
-    TemperatureData* buffer = _parent.getTemperatureData(command->sensorid(), 
-            startTime, interval, timeBetweenReadings);
+    TemperatureData* buffer = _parent.getDatabaseManager().getTemperatureData(command->sensorid(),
+            startTime, endTime, timeBetweenReadings, summaryOnly);
 
     return buffer;
 }

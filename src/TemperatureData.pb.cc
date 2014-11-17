@@ -133,7 +133,7 @@ void protobuf_AddDesc_TemperatureData_2eproto() {
     ".TemperatureData.SingleDay\032Y\n\013Temperatur"
     "e\022\021\n\ttimestamp\030\001 \002(\r\022\023\n\013temperature\030\002 \002("
     "\r\022\020\n\010humidity\030\003 \001(\r\022\020\n\010uniqueId\030\004 \001(\r\032\351\001"
-    "\n\tSingleDay\022\021\n\ttimestamp\030\001 \002(\r\0228\n\022curren"
+    "\n\tSingleDay\022\021\n\ttimestamp\030\001 \001(\r\0228\n\022curren"
     "tTemperature\030\002 \001(\0132\034.TemperatureData.Tem"
     "perature\022-\n\007dayHigh\030\003 \001(\0132\034.TemperatureD"
     "ata.Temperature\022,\n\006dayLow\030\004 \001(\0132\034.Temper"
@@ -579,7 +579,7 @@ bool TemperatureData_SingleDay::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 timestamp = 1;
+      // optional uint32 timestamp = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
@@ -669,7 +669,7 @@ bool TemperatureData_SingleDay::MergePartialFromCodedStream(
 
 void TemperatureData_SingleDay::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required uint32 timestamp = 1;
+  // optional uint32 timestamp = 1;
   if (has_timestamp()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->timestamp(), output);
   }
@@ -706,7 +706,7 @@ void TemperatureData_SingleDay::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* TemperatureData_SingleDay::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required uint32 timestamp = 1;
+  // optional uint32 timestamp = 1;
   if (has_timestamp()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->timestamp(), target);
   }
@@ -750,7 +750,7 @@ int TemperatureData_SingleDay::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 timestamp = 1;
+    // optional uint32 timestamp = 1;
     if (has_timestamp()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
@@ -843,7 +843,6 @@ void TemperatureData_SingleDay::CopyFrom(const TemperatureData_SingleDay& from) 
 }
 
 bool TemperatureData_SingleDay::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
   if (has_currenttemperature()) {
     if (!this->currenttemperature().IsInitialized()) return false;

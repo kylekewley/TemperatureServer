@@ -203,7 +203,7 @@ class TemperatureData_SingleDay : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 timestamp = 1;
+  // optional uint32 timestamp = 1;
   inline bool has_timestamp() const;
   inline void clear_timestamp();
   static const int kTimestampFieldNumber = 1;
@@ -475,7 +475,7 @@ inline void TemperatureData_Temperature::set_uniqueid(::google::protobuf::uint32
 
 // TemperatureData_SingleDay
 
-// required uint32 timestamp = 1;
+// optional uint32 timestamp = 1;
 inline bool TemperatureData_SingleDay::has_timestamp() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
