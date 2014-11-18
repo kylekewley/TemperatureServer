@@ -6,6 +6,21 @@
 #include <sqlite3.h>
 
 #include "TemperatureData.pb.h"
+#include "Sensor.h"
+typedef enum SummaryColumnName {
+    ColumnUniqueSummaryID,
+    ColumnSensorSummaryID,
+    ColumnSummaryTimestamp,
+
+    /* Day summary table */
+    ColumnCurrentTemperature,
+    ColumnMaxTemperature,
+    ColumnMinTemperature,
+    ColumnCurrentTemperatureTime,
+    ColumnMaxTemperatureTime,
+    ColumnMinTemperatureTime,
+}SummaryColumnName;
+
 typedef enum HistoryColumnName{
     /* Shared */
     ColumnUniqueID,
@@ -16,15 +31,6 @@ typedef enum HistoryColumnName{
     ColumnTemperature,
     ColumnHumidity,
     ColumnDayForeignKey,
-
-    /* Day summary table */
-    ColumnMaxTemperature,
-    ColumnMaxTemperatureTime,
-    ColumnMinTemperature,
-    ColumnMinTemperatureTime,
-    ColumnCurrentTemperature,
-    ColumnCurrentTemperatureTime,
-
 }HistoryColumnName;
 
 
@@ -49,6 +55,7 @@ class DatabaseManager {
      */
     static int32_t localDayStartEpoch(int32_t epoch);
 
+    void initializeSensorData(std::vector<Sensor> sensors);
     private:
     sqlite3* database;
 
@@ -61,6 +68,7 @@ class DatabaseManager {
     static long getTimezoneOffset();
 
     static std::string getColumnName(HistoryColumnName column);
+    static std::string getColumnName(SummaryColumnName column);
 
 
     bool tableExists(sqlite3* db, const std::string& tablename, int* result);

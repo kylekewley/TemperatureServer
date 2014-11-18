@@ -34,6 +34,7 @@ typedef enum SensorID {
     OutsideSensorID,
     InsideSensorID
 }SensorID;
+const std::string TemperatureServer::groupID = "TemperatureGroup";
 
 int main(int argc, char **argv) {
     int portNumber = DEFAULT_PORT_NUMBER;
@@ -110,6 +111,7 @@ TemperatureServer::TemperatureServer(std::vector<Sensor>& sensors, ClientManager
     if (databaseManager.connectToDatabase() != SQLITE_OK) {
         std::cerr << "Couldn't connect to database: temperatures will not be updated" << std::endl;
     }
+    databaseManager.initializeSensorData(sensors);
 
     // Block the thread and update data
     blockAndUpdateSensors(updateInterval);

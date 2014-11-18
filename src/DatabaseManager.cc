@@ -86,19 +86,122 @@ bool DatabaseManager::tableExists(sqlite3* db, const std::string& tableName, int
     return num > 0;
 }
 
+ void DatabaseManager::initializeSensorData(std::vector<Sensor> sensors) {
+     for (Sensor s : sensors) {
+         std::stringstream query;
+         // Get the day summaries
+         query << "SELECT * FROM " << SummaryTableName << " "
+             << "WHERE " << getColumnName(ColumnTimestamp) << " == ? AND "
+             << getColumnName(ColumnSensorID) << " == ?;";
+
+         sqlite3_stmt* summaryStatement;
+
+         int result = sqlite3_prepare_v2(database, query.str().c_str(), query.str().length(), &summaryStatement, NULL);
+         if (result != SQLITE_OK) {
+             sqlite3_finalize(summaryStatement);
+             return;
+         }
+
+         result = sqlite3_bind_int(summaryStatement, 1, localDayStartEpoch());
+         if (result != SQLITE_OK) {
+             sqlite3_finalize(summaryStatement);
+             return;
+         }
+
+         result = sqlite3_bind_int(summaryStatement, 2, s.sensorId);
+         if (result != SQLITE_OK) {
+             sqlite3_finalize(summaryStatement);
+             return;
+         }
+
+         // Query for detailed data
+         query.str("");
+         query << "SELECT * FROM " << HistoryTableName << " "
+             << "WHERE " << getColumnName(ColumnDayForeignKey) << " == ? ORDER BY "
+             << getColumnName(ColumnTimestamp) << " ASC;" << std::endl;
+
+         sqlite3_stmt* preparedStatement;
+         result = sqlite3_prepare_v2(database, query.str().c_str(), query.str().length(), &preparedStatement, NULL);
+         if (result != SQLITE_OK) {
+             sqlite3_finalize(preparedStatement);
+             return;
+         }
+
+         int i = 0;
+         while (sqlite3_step(summaryStatement) == SQLITE_ROW) {
+             ++i;
+             int64_t rowId = sqlite3_column_int64(summaryStatement, ColumnUniqueID);
+             int32_t currentTemp = sqlite3_column_int(summaryStatement, ColumnCurrentTemperature);
+             int32_t maxTemp = sqlite3_column_int(summaryStatement, ColumnMaxTemperature);
+             int32_t minTemp = sqlite3_column_int(summaryStatement, ColumnMinTemperature);
+             int32_t maxTempTime = sqlite3_column_int(summaryStatement, ColumnMaxTemperatureTime);
+             int32_t minTempTime = sqlite3_column_int(summaryStatement, ColumnMinTemperatureTime);
+             int32_t currentTempTime = sqlite3_column_int(summaryStatement, ColumnCurrentTemperatureTime);
+
+
+             TemperatureData_SingleDay day;
+
+             TemperatureData_Temperature *temp = new TemperatureData_Temperature();
+             temp->set_timestamp(currentTempTime);
+             temp->set_temperature(currentTemp);
+             day.set_allocated_currenttemperature(temp);
+
+             temp = new TemperatureData_Temperature();
+             temp->set_timestamp(maxTempTime);
+             temp->set_temperature(maxTemp);
+             day.set_allocated_dayhigh(temp);
+
+             temp = new TemperatureData_Temperature();
+             temp->set_timestamp(minTempTime);
+             temp->set_temperature(minTemp);
+             day.set_allocated_daylow(temp);
+
+             currentDayRecordEpoch[s.sensorId] = localDayStartEpoch();
+             currentDayRecordID[s.sensorId] = rowId;
+
+
+             // Detailed data too
+             result = sqlite3_bind_int(preparedStatement, 1, s.sensorId);
+             if (result != SQLITE_OK) {
+                 sqlite3_finalize(preparedStatement);
+                 return;
+             }
+
+             while (sqlite3_step(preparedStatement) == SQLITE_ROW) {
+                 int64_t rowId = sqlite3_column_int64(preparedStatement, ColumnUniqueID);
+                 int32_t temperature = sqlite3_column_int(preparedStatement, ColumnTemperature);
+                 int32_t humidity = sqlite3_column_int(preparedStatement, ColumnHumidity);
+                 int32_t timestamp = sqlite3_column_int(preparedStatement, ColumnTimestamp);
+
+                 TemperatureData_Temperature* temp = day.add_temperatures();
+                 temp->set_timestamp(timestamp);
+                 temp->set_uniqueid((uint32_t)rowId);
+                 temp->set_humidity(humidity);
+                 temp->set_temperature(temperature);
+            }
+
+             currentDayData[s.sensorId] = day;
+         }
+         if (i == 0) {
+             // There was no data
+         }
+
+     }
+}
 int DatabaseManager::createSummaryTable(sqlite3* db) {
     std::stringstream query;
     sqlite3_stmt* preparedStatement;
 
     query << "CREATE TABLE IF NOT EXISTS " << SummaryTableName << " ("
-        << getColumnName(ColumnUniqueID) << " INTEGER PRIMARY KEY, "
-        << getColumnName(ColumnSensorID) << " INTEGER DEFAULT (-1), "
+        << getColumnName(ColumnUniqueSummaryID) << " INTEGER PRIMARY KEY, "
+        << getColumnName(ColumnSensorSummaryID) << " INTEGER DEFAULT (-1), "
+        << getColumnName(ColumnSummaryTimestamp) << " INTEGER, "
         << getColumnName(ColumnCurrentTemperature) << " INTEGER DEFAULT (0), "
         << getColumnName(ColumnMaxTemperature) << " INTEGER DEFAULT (0), "
         << getColumnName(ColumnMinTemperature) << " INTEGER DEFAULT (0), "
+        << getColumnName(ColumnCurrentTemperatureTime) << " INTEGER DEFAULT (0), "
         << getColumnName(ColumnMaxTemperatureTime) << " INTEGER DEFAULT (0), "
-        << getColumnName(ColumnMinTemperatureTime) << " INTEGER DEFAULT (0), "
-        << getColumnName(ColumnTimestamp) << " INTEGER );"
+        << getColumnName(ColumnMinTemperatureTime) << " INTEGER DEFAULT (0));"
         << std::endl;
 
     int result = sqlite3_prepare_v2(db, query.str().c_str(), query.str().length(), &preparedStatement, NULL);
@@ -126,12 +229,13 @@ int DatabaseManager::createHistoryTable(sqlite3* db) {
     query << "CREATE TABLE IF NOT EXISTS " << HistoryTableName << " ("
         << getColumnName(ColumnUniqueID) << " INTEGER PRIMARY KEY, "
         << getColumnName(ColumnSensorID) << " INTEGER DEFAULT (-1), "
+        << getColumnName(ColumnTimestamp) << " INTEGER DEFAULT(strftime('%s', 'now')), " 
         << getColumnName(ColumnTemperature) << " INTEGER DEFAULT (0), "
         << getColumnName(ColumnHumidity) << " INTEGER DEFAULT (0), "
-        << getColumnName(ColumnDayForeignKey) << " INTEGER DEFAULT (0), "
-        << getColumnName(ColumnTimestamp) << " INTEGER DEFAULT(strftime('%s', 'now')));" 
+        << getColumnName(ColumnDayForeignKey) << " INTEGER DEFAULT (0));"
         << std::endl;
 
+    std::cout << query.str() << std::endl;
     sqlite3_stmt* preparedStatement;
     int result = sqlite3_prepare_v2(db, query.str().c_str(), query.str().length(), &preparedStatement, NULL);
     if (result != SQLITE_OK) {
@@ -165,6 +269,7 @@ TemperatureData *DatabaseManager::getTemperatureData(uint8_t sensorID, int32_t s
         endTime = tmp;
     }
 
+
     // Get the day summaries
     query << "SELECT * FROM " << SummaryTableName << " "
         << "WHERE " << getColumnName(ColumnTimestamp) << " BETWEEN ? AND ? AND "
@@ -196,6 +301,9 @@ TemperatureData *DatabaseManager::getTemperatureData(uint8_t sensorID, int32_t s
         return NULL;
     }
 
+    std::cout << query.str() << std::endl;
+    std::cout << "sID: " << std::to_string(sensorID) << std::endl;
+
     // Query for detailed data
     query.str("");
     query << "SELECT * FROM " << HistoryTableName << " "
@@ -208,6 +316,7 @@ TemperatureData *DatabaseManager::getTemperatureData(uint8_t sensorID, int32_t s
         sqlite3_finalize(preparedStatement);
         return NULL;
     }
+
 
 
     TemperatureData *tempData = new TemperatureData();
@@ -223,14 +332,11 @@ TemperatureData *DatabaseManager::getTemperatureData(uint8_t sensorID, int32_t s
         int32_t minTempTime = sqlite3_column_int(summaryStatement, ColumnMinTemperatureTime);
         int32_t currentTempTime = sqlite3_column_int(summaryStatement, ColumnCurrentTemperatureTime);
 
+        std::cout << "Has data " << std::to_string(currentTemp) << std::endl;
+
         TemperatureData_SingleDay *day = tempData->add_daydata();
 
         TemperatureData_Temperature *temp = new TemperatureData_Temperature();
-        temp->set_timestamp(currentTempTime);
-        temp->set_temperature(currentTemp);
-        day->set_allocated_currenttemperature(temp);
-
-        temp = new TemperatureData_Temperature();
         temp->set_timestamp(maxTempTime);
         temp->set_temperature(maxTemp);
         day->set_allocated_dayhigh(temp);
@@ -239,6 +345,11 @@ TemperatureData *DatabaseManager::getTemperatureData(uint8_t sensorID, int32_t s
         temp->set_timestamp(minTempTime);
         temp->set_temperature(minTemp);
         day->set_allocated_daylow(temp);
+
+        temp = new TemperatureData_Temperature();
+        temp->set_timestamp(currentTempTime);
+        temp->set_temperature(currentTemp);
+
 
         if (!summary) {
             // Detailed data too
@@ -250,10 +361,11 @@ TemperatureData *DatabaseManager::getTemperatureData(uint8_t sensorID, int32_t s
 
             int32_t lastReadingTime = 0;
 
+            int32_t humidity = -1;
             while (sqlite3_step(preparedStatement) == SQLITE_ROW) {
                 int64_t rowId = sqlite3_column_int64(preparedStatement, ColumnUniqueID);
                 int32_t temperature = sqlite3_column_int(preparedStatement, ColumnTemperature);
-                int32_t humidity = sqlite3_column_int(preparedStatement, ColumnHumidity);
+                humidity = sqlite3_column_int(preparedStatement, ColumnHumidity);
                 int32_t timestamp = sqlite3_column_int(preparedStatement, ColumnTimestamp);
 
                 if (::abs(timestamp - lastReadingTime) < secondsBetweenReadings) {
@@ -266,7 +378,13 @@ TemperatureData *DatabaseManager::getTemperatureData(uint8_t sensorID, int32_t s
                 temp->set_humidity(humidity);
                 temp->set_temperature(temperature);
             }
+
+            if (humidity >= 0) {
+                temp->set_humidity(humidity);
+            }
         }
+
+        day->set_allocated_currenttemperature(temp);
     }
 
 
@@ -339,7 +457,7 @@ int DatabaseManager::updateCurrentDayRecord(int sensorid, uint32_t temperature, 
         int32_t currentTime = timeSinceEpoch();
         currentDayRecordEpoch[sensorid] = localDayStartEpoch();
 
-        TemperatureData_SingleDay& dayData = currentDayData[sensorid];
+        TemperatureData_SingleDay dayData;
 
         TemperatureData_Temperature *current = new TemperatureData_Temperature();
         current->set_timestamp(currentTime);
@@ -355,6 +473,7 @@ int DatabaseManager::updateCurrentDayRecord(int sensorid, uint32_t temperature, 
 
         query << "INSERT INTO " << SummaryTableName << " ("
             << getColumnName(ColumnTimestamp) << ", "
+            << getColumnName(ColumnSensorID) << ", "
             << getColumnName(ColumnCurrentTemperature) << ", "
             << getColumnName(ColumnCurrentTemperatureTime) << ", "
             << getColumnName(ColumnMaxTemperature) << ", "
@@ -363,17 +482,20 @@ int DatabaseManager::updateCurrentDayRecord(int sensorid, uint32_t temperature, 
             << getColumnName(ColumnMinTemperatureTime) << ") "
             << "VALUES ("
             << std::to_string(localDayStartEpoch()) << ", "
+            << std::to_string(sensorid) << ", "
             << std::to_string(temperature) << ", "
             << std::to_string(currentTime) << ", "
             << std::to_string(temperature) << ", "
             << std::to_string(currentTime) << ", "
             << std::to_string(temperature) << ", "
-            << std::to_string(currentTime) << ", "
-            ");";
+            << std::to_string(currentTime) << ");";
+
+        std::cout << query.str() << std::endl;
 
         sqlite3_stmt* preparedStatement;
         result = sqlite3_prepare_v2(database, query.str().c_str(), query.str().length(), &preparedStatement, NULL);
         if (result != SQLITE_OK) {
+            std::cout << "Error: " << std::to_string(result) << std::endl;
             sqlite3_finalize(preparedStatement);
             return result;
         }
@@ -382,14 +504,11 @@ int DatabaseManager::updateCurrentDayRecord(int sensorid, uint32_t temperature, 
         if (result >= SQLITE_ROW) {
             result = SQLITE_OK;
         }
-        if (result != SQLITE_OK) {
-            sqlite3_finalize(preparedStatement);
-            return result;
-        }
 
         sqlite3_finalize(preparedStatement);
 
         currentDayRecordID[sensorid] = sqlite3_last_insert_rowid(database);
+        currentDayData[sensorid] = dayData;
     }
 
     return result;
@@ -460,6 +579,31 @@ int32_t DatabaseManager::localDayStartEpoch(int32_t epoch) {
     return startDay;
 }
 
+std::string DatabaseManager::getColumnName(SummaryColumnName column) {
+    switch(column) {
+        case ColumnUniqueSummaryID:
+            return "unique_id";
+        case ColumnSensorSummaryID:
+            return "sensor_id";
+        case ColumnSummaryTimestamp:
+            return "timestamp";
+        case ColumnMaxTemperature:
+            return "max_temp";
+        case ColumnMaxTemperatureTime:
+            return "max_temp_epoch";
+        case ColumnMinTemperature:
+            return "min_temp";
+        case ColumnMinTemperatureTime:
+            return "min_temp_epoch";
+        case ColumnCurrentTemperature:
+            return "current_temp";
+        case ColumnCurrentTemperatureTime:
+            return "current_temp_time";
+    }
+
+    return "";
+ }
+
 std::string DatabaseManager::getColumnName(HistoryColumnName column) {
     switch(column) {
         case ColumnUniqueID:
@@ -474,19 +618,7 @@ std::string DatabaseManager::getColumnName(HistoryColumnName column) {
             return "timestamp";
         case ColumnDayForeignKey:
             return "day_id";
-        case ColumnMaxTemperature:
-            return "max_temp";
-        case ColumnMaxTemperatureTime:
-            return "max_temp_epoch";
-        case ColumnMinTemperature:
-            return "min_temp";
-        case ColumnMinTemperatureTime:
-            return "min_temp_epoch";
-        case ColumnCurrentTemperature:
-            return "current_temp";
-        case ColumnCurrentTemperatureTime:
-            return "current_temp_time";
-    }
+   }
 
     return "";
 }

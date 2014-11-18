@@ -129,6 +129,7 @@ const int ServerMetaData_Sensor::kSensorNameFieldNumber;
 ServerMetaData_Sensor::ServerMetaData_Sensor()
   : ::google::protobuf::Message() {
   SharedCtor();
+  // @@protoc_insertion_point(constructor:ServerMetaData.Sensor)
 }
 
 void ServerMetaData_Sensor::InitAsDefaultInstance() {
@@ -138,21 +139,24 @@ ServerMetaData_Sensor::ServerMetaData_Sensor(const ServerMetaData_Sensor& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:ServerMetaData.Sensor)
 }
 
 void ServerMetaData_Sensor::SharedCtor() {
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   sensorid_ = 0u;
-  sensorname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  sensorname_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
 ServerMetaData_Sensor::~ServerMetaData_Sensor() {
+  // @@protoc_insertion_point(destructor:ServerMetaData.Sensor)
   SharedDtor();
 }
 
 void ServerMetaData_Sensor::SharedDtor() {
-  if (sensorname_ != &::google::protobuf::internal::kEmptyString) {
+  if (sensorname_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete sensorname_;
   }
   if (this != default_instance_) {
@@ -181,10 +185,10 @@ ServerMetaData_Sensor* ServerMetaData_Sensor::New() const {
 }
 
 void ServerMetaData_Sensor::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+  if (_has_bits_[0 / 32] & 3) {
     sensorid_ = 0u;
     if (has_sensorname()) {
-      if (sensorname_ != &::google::protobuf::internal::kEmptyString) {
+      if (sensorname_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         sensorname_->clear();
       }
     }
@@ -195,20 +199,23 @@ void ServerMetaData_Sensor::Clear() {
 
 bool ServerMetaData_Sensor::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
+  // @@protoc_insertion_point(parse_start:ServerMetaData.Sensor)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required uint32 sensorId = 1;
       case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &sensorid_)));
           set_has_sensorid();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(18)) goto parse_sensorName;
         break;
@@ -216,26 +223,27 @@ bool ServerMetaData_Sensor::MergePartialFromCodedStream(
 
       // optional string sensorName = 2;
       case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+        if (tag == 18) {
          parse_sensorName:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_sensorname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
             this->sensorname().data(), this->sensorname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "sensorname");
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectAtEnd()) return true;
+        if (input->ExpectAtEnd()) goto success;
         break;
       }
 
       default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
+          goto success;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -243,12 +251,18 @@ bool ServerMetaData_Sensor::MergePartialFromCodedStream(
       }
     }
   }
+success:
+  // @@protoc_insertion_point(parse_success:ServerMetaData.Sensor)
   return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:ServerMetaData.Sensor)
+  return false;
 #undef DO_
 }
 
 void ServerMetaData_Sensor::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:ServerMetaData.Sensor)
   // required uint32 sensorId = 1;
   if (has_sensorid()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->sensorid(), output);
@@ -256,10 +270,11 @@ void ServerMetaData_Sensor::SerializeWithCachedSizes(
 
   // optional string sensorName = 2;
   if (has_sensorname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->sensorname().data(), this->sensorname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "sensorname");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       2, this->sensorname(), output);
   }
 
@@ -267,10 +282,12 @@ void ServerMetaData_Sensor::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
+  // @@protoc_insertion_point(serialize_end:ServerMetaData.Sensor)
 }
 
 ::google::protobuf::uint8* ServerMetaData_Sensor::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:ServerMetaData.Sensor)
   // required uint32 sensorId = 1;
   if (has_sensorid()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->sensorid(), target);
@@ -278,9 +295,10 @@ void ServerMetaData_Sensor::SerializeWithCachedSizes(
 
   // optional string sensorName = 2;
   if (has_sensorname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->sensorname().data(), this->sensorname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "sensorname");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         2, this->sensorname(), target);
@@ -290,6 +308,7 @@ void ServerMetaData_Sensor::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
+  // @@protoc_insertion_point(serialize_to_array_end:ServerMetaData.Sensor)
   return target;
 }
 
@@ -394,6 +413,7 @@ const int ServerMetaData::kSensorsFieldNumber;
 ServerMetaData::ServerMetaData()
   : ::google::protobuf::Message() {
   SharedCtor();
+  // @@protoc_insertion_point(constructor:ServerMetaData)
 }
 
 void ServerMetaData::InitAsDefaultInstance() {
@@ -403,6 +423,7 @@ ServerMetaData::ServerMetaData(const ServerMetaData& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:ServerMetaData)
 }
 
 void ServerMetaData::SharedCtor() {
@@ -411,6 +432,7 @@ void ServerMetaData::SharedCtor() {
 }
 
 ServerMetaData::~ServerMetaData() {
+  // @@protoc_insertion_point(destructor:ServerMetaData)
   SharedDtor();
 }
 
@@ -448,30 +470,34 @@ void ServerMetaData::Clear() {
 
 bool ServerMetaData::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
+  // @@protoc_insertion_point(parse_start:ServerMetaData)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // repeated .ServerMetaData.Sensor sensors = 1;
       case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+        if (tag == 10) {
          parse_sensors:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                 input, add_sensors()));
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(10)) goto parse_sensors;
-        if (input->ExpectAtEnd()) return true;
+        if (input->ExpectAtEnd()) goto success;
         break;
       }
 
       default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
+          goto success;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -479,12 +505,18 @@ bool ServerMetaData::MergePartialFromCodedStream(
       }
     }
   }
+success:
+  // @@protoc_insertion_point(parse_success:ServerMetaData)
   return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:ServerMetaData)
+  return false;
 #undef DO_
 }
 
 void ServerMetaData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:ServerMetaData)
   // repeated .ServerMetaData.Sensor sensors = 1;
   for (int i = 0; i < this->sensors_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
@@ -495,10 +527,12 @@ void ServerMetaData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
+  // @@protoc_insertion_point(serialize_end:ServerMetaData)
 }
 
 ::google::protobuf::uint8* ServerMetaData::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:ServerMetaData)
   // repeated .ServerMetaData.Sensor sensors = 1;
   for (int i = 0; i < this->sensors_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
@@ -510,6 +544,7 @@ void ServerMetaData::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
+  // @@protoc_insertion_point(serialize_to_array_end:ServerMetaData)
   return target;
 }
 
@@ -567,9 +602,7 @@ void ServerMetaData::CopyFrom(const ServerMetaData& from) {
 
 bool ServerMetaData::IsInitialized() const {
 
-  for (int i = 0; i < sensors_size(); i++) {
-    if (!this->sensors(i).IsInitialized()) return false;
-  }
+  if (!::google::protobuf::internal::AllAreInitialized(this->sensors())) return false;
   return true;
 }
 
