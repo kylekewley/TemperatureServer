@@ -5,5 +5,8 @@ message ServerMetaData {
     }
 
     repeated Sensor sensors = 1;
+    optional int32 timeZoneOffset = 2;
+    optional double longitude = 3;
+    optional double latitude = 4;
 }
 

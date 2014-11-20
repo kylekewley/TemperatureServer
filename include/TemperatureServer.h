@@ -30,6 +30,9 @@ class TemperatureServer {
 
     const DatabaseManager& getDatabaseManager() const;
 
+    static double getLongitude();
+    static double getLatitude();
+
     private:
     static const std::string groupID;
 

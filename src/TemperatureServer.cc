@@ -86,6 +86,13 @@ int main(int argc, char **argv) {
     return 0;
 }
 
+double TemperatureServer::getLongitude() {
+    return 32.8350371;
+}
+double TemperatureServer::getLatitude() {
+    return -116.7664319;
+}
+
 const std::vector<Sensor>& TemperatureServer::getSensors() const {
     return sensors;
 }

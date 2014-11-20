@@ -56,6 +56,8 @@ class DatabaseManager {
     static int32_t localDayStartEpoch(int32_t epoch);
 
     void initializeSensorData(std::vector<Sensor> sensors);
+
+    static long getTimezoneOffset();
     private:
     sqlite3* database;
 
@@ -65,7 +67,6 @@ class DatabaseManager {
 
     static const long TimezoneOffset;
 
-    static long getTimezoneOffset();
 
     static std::string getColumnName(HistoryColumnName column);
     static std::string getColumnName(SummaryColumnName column);

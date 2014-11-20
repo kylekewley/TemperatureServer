@@ -35,8 +35,11 @@ void protobuf_AssignDesc_ServerMetaData_2eproto() {
       "ServerMetaData.proto");
   GOOGLE_CHECK(file != NULL);
   ServerMetaData_descriptor_ = file->message_type(0);
-  static const int ServerMetaData_offsets_[1] = {
+  static const int ServerMetaData_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ServerMetaData, sensors_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ServerMetaData, timezoneoffset_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ServerMetaData, longitude_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ServerMetaData, latitude_),
   };
   ServerMetaData_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -99,10 +102,11 @@ void protobuf_AddDesc_ServerMetaData_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\024ServerMetaData.proto\"i\n\016ServerMetaData"
-    "\022\'\n\007sensors\030\001 \003(\0132\026.ServerMetaData.Senso"
-    "r\032.\n\006Sensor\022\020\n\010sensorId\030\001 \002(\r\022\022\n\nsensorN"
-    "ame\030\002 \001(\t", 129);
+    "\n\024ServerMetaData.proto\"\246\001\n\016ServerMetaDat"
+    "a\022\'\n\007sensors\030\001 \003(\0132\026.ServerMetaData.Sens"
+    "or\022\026\n\016timeZoneOffset\030\002 \001(\005\022\021\n\tlongitude\030"
+    "\003 \001(\001\022\020\n\010latitude\030\004 \001(\001\032.\n\006Sensor\022\020\n\010sen"
+    "sorId\030\001 \002(\r\022\022\n\nsensorName\030\002 \001(\t", 191);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "ServerMetaData.proto", &protobuf_RegisterTypes);
   ServerMetaData::default_instance_ = new ServerMetaData();
@@ -408,6 +412,9 @@ void ServerMetaData_Sensor::Swap(ServerMetaData_Sensor* other) {
 
 #ifndef _MSC_VER
 const int ServerMetaData::kSensorsFieldNumber;
+const int ServerMetaData::kTimeZoneOffsetFieldNumber;
+const int ServerMetaData::kLongitudeFieldNumber;
+const int ServerMetaData::kLatitudeFieldNumber;
 #endif  // !_MSC_VER
 
 ServerMetaData::ServerMetaData()
@@ -428,6 +435,9 @@ ServerMetaData::ServerMetaData(const ServerMetaData& from)
 
 void ServerMetaData::SharedCtor() {
   _cached_size_ = 0;
+  timezoneoffset_ = 0;
+  longitude_ = 0;
+  latitude_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -463,6 +473,21 @@ ServerMetaData* ServerMetaData::New() const {
 }
 
 void ServerMetaData::Clear() {
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<ServerMetaData*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  ZR_(longitude_, timezoneoffset_);
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   sensors_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -488,6 +513,51 @@ bool ServerMetaData::MergePartialFromCodedStream(
           goto handle_unusual;
         }
         if (input->ExpectTag(10)) goto parse_sensors;
+        if (input->ExpectTag(16)) goto parse_timeZoneOffset;
+        break;
+      }
+
+      // optional int32 timeZoneOffset = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_timeZoneOffset:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &timezoneoffset_)));
+          set_has_timezoneoffset();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(25)) goto parse_longitude;
+        break;
+      }
+
+      // optional double longitude = 3;
+      case 3: {
+        if (tag == 25) {
+         parse_longitude:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
+                 input, &longitude_)));
+          set_has_longitude();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(33)) goto parse_latitude;
+        break;
+      }
+
+      // optional double latitude = 4;
+      case 4: {
+        if (tag == 33) {
+         parse_latitude:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
+                 input, &latitude_)));
+          set_has_latitude();
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -523,6 +593,21 @@ void ServerMetaData::SerializeWithCachedSizes(
       1, this->sensors(i), output);
   }
 
+  // optional int32 timeZoneOffset = 2;
+  if (has_timezoneoffset()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->timezoneoffset(), output);
+  }
+
+  // optional double longitude = 3;
+  if (has_longitude()) {
+    ::google::protobuf::internal::WireFormatLite::WriteDouble(3, this->longitude(), output);
+  }
+
+  // optional double latitude = 4;
+  if (has_latitude()) {
+    ::google::protobuf::internal::WireFormatLite::WriteDouble(4, this->latitude(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -540,6 +625,21 @@ void ServerMetaData::SerializeWithCachedSizes(
         1, this->sensors(i), target);
   }
 
+  // optional int32 timeZoneOffset = 2;
+  if (has_timezoneoffset()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->timezoneoffset(), target);
+  }
+
+  // optional double longitude = 3;
+  if (has_longitude()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(3, this->longitude(), target);
+  }
+
+  // optional double latitude = 4;
+  if (has_latitude()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(4, this->latitude(), target);
+  }
+
   if (!unknown_fields().empty()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
@@ -551,6 +651,25 @@ void ServerMetaData::SerializeWithCachedSizes(
 int ServerMetaData::ByteSize() const {
   int total_size = 0;
 
+  if (_has_bits_[1 / 32] & (0xffu << (1 % 32))) {
+    // optional int32 timeZoneOffset = 2;
+    if (has_timezoneoffset()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->timezoneoffset());
+    }
+
+    // optional double longitude = 3;
+    if (has_longitude()) {
+      total_size += 1 + 8;
+    }
+
+    // optional double latitude = 4;
+    if (has_latitude()) {
+      total_size += 1 + 8;
+    }
+
+  }
   // repeated .ServerMetaData.Sensor sensors = 1;
   total_size += 1 * this->sensors_size();
   for (int i = 0; i < this->sensors_size(); i++) {
@@ -585,6 +704,17 @@ void ServerMetaData::MergeFrom(const ::google::protobuf::Message& from) {
 void ServerMetaData::MergeFrom(const ServerMetaData& from) {
   GOOGLE_CHECK_NE(&from, this);
   sensors_.MergeFrom(from.sensors_);
+  if (from._has_bits_[1 / 32] & (0xffu << (1 % 32))) {
+    if (from.has_timezoneoffset()) {
+      set_timezoneoffset(from.timezoneoffset());
+    }
+    if (from.has_longitude()) {
+      set_longitude(from.longitude());
+    }
+    if (from.has_latitude()) {
+      set_latitude(from.latitude());
+    }
+  }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
@@ -609,6 +739,9 @@ bool ServerMetaData::IsInitialized() const {
 void ServerMetaData::Swap(ServerMetaData* other) {
   if (other != this) {
     sensors_.Swap(&other->sensors_);
+    std::swap(timezoneoffset_, other->timezoneoffset_);
+    std::swap(longitude_, other->longitude_);
+    std::swap(latitude_, other->latitude_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
